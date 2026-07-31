@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>National Exchange — Send Money Worldwide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0A1F3D;
+    --navy-mid:#12294D;
+    --navy-panel:#152C52;
+    --white:#FFFFFF;
+    --ivory:#F7F8FA;
+    --gold:#C6A15B;
+    --gold-bright:#E8C878;
+    --text-muted:#8FA0BC;
+    --text-soft:#B9C4D6;
+    --border-line:rgba(198,161,91,0.18);
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--navy-deep);
+    color:var(--white);
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  body[data-lang="bn"]{font-family:'Noto Sans Bengali','Inter',sans-serif;}
+  body[data-lang="bn"] h1,
+  body[data-lang="bn"] h2,
+  body[data-lang="bn"] h3,
+  body[data-lang="bn"] .display{font-family:'Noto Sans Bengali','Fraunces',serif; font-weight:600; letter-spacing:0;}
+  body[data-lang="bn"] .brand-name{font-family:'Fraunces',serif;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  ul{list-style:none;}
+  .container{max-width:1180px;margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(10,31,61,0.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border-line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px; max-width:1180px; margin:0 auto;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand img{height:36px; width:auto;}
+  .brand-name{font-family:'Fraunces',serif; font-weight:600; font-size:1.2rem; letter-spacing:-0.01em;}
+  .brand-name span{color:var(--gold);}
+  .nav-links{display:flex; gap:36px; align-items:center;}
+  .nav-links a{
+    font-size:0.94rem; color:var(--text-soft); font-weight:500;
+    transition:color 0.2s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--gold-bright);}
+  .nav-cta{
+    background:var(--gold); color:var(--navy-deep); font-weight:700;
+    padding:11px 24px; border-radius:100px; font-size:0.92rem;
+    transition:background 0.2s ease, transform 0.2s ease;
+  }
+  .nav-cta:hover, .nav-cta:focus-visible{background:var(--gold-bright); transform:translateY(-1px);}
+  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .nav-toggle span{display:block; width:24px; height:2px; background:var(--white); margin:5px 0; border-radius:2px;}
+  .nav-right{display:flex; align-items:center; gap:20px;}
+  .lang-switch{
+    display:flex; align-items:center; gap:2px;
+    background:rgba(198,161,91,0.08); border:1px solid var(--border-line);
+    border-radius:100px; padding:4px;
+  }
+  .lang-btn{
+    border:none; background:transparent; cursor:pointer;
+    font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:600;
+    color:var(--text-soft); padding:6px 14px; border-radius:100px;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .lang-btn.active{background:var(--gold); color:var(--navy-deep);}
+  .lang-btn:hover:not(.active){color:var(--gold-bright);}
+  @media (max-width:640px){
+    .lang-switch{padding:3px;}
+    .lang-btn{padding:5px 11px; font-size:0.78rem;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:100px 0 70px;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(198,161,91,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 10% 110%, rgba(21,44,82,0.9), transparent 60%);
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold-bright); font-weight:600; margin-bottom:22px;
+  }
+  .eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--gold-bright); box-shadow:0 0 0 4px rgba(232,200,120,0.2);}
+  .hero h1{
+    font-size:3.4rem; line-height:1.06; margin-bottom:22px;
+  }
+  .hero h1 em{font-style:italic; color:var(--gold-bright); font-weight:500;}
+  .hero p.lead{
+    font-size:1.12rem; color:var(--text-soft); line-height:1.65; max-width:490px; margin-bottom:34px;
+  }
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:38px;}
+  .btn-primary{
+    background:var(--gold); color:var(--navy-deep); font-weight:700;
+    padding:15px 30px; border-radius:100px; font-size:0.98rem;
+    display:inline-flex; align-items:center; gap:10px;
+    transition:background 0.2s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover, .btn-primary:focus-visible{background:var(--gold-bright); transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid var(--border-line); color:var(--white); font-weight:600;
+    padding:15px 28px; border-radius:100px; font-size:0.98rem;
+    display:inline-flex; align-items:center; gap:10px;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible{border-color:var(--gold); background:rgba(198,161,91,0.08);}
+  .hero-stats{display:flex; gap:38px;}
+  .hero-stats div strong{
+    display:block; font-family:'IBM Plex Mono',monospace; font-size:1.5rem; color:var(--gold-bright); font-weight:500;
+  }
+  .hero-stats div span{font-size:0.82rem; color:var(--text-muted);}
+
+  .hero-visual{
+    position:relative; border-radius:24px; overflow:hidden;
+    aspect-ratio:4/5; background:var(--navy-panel);
+    border:1px solid var(--border-line);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+  }
+  .hero-visual img{width:100%; height:100%; object-fit:cover;}
+  .hero-visual .frame-label{
+    position:absolute; bottom:18px; left:18px; right:18px;
+    background:rgba(10,31,61,0.75); backdrop-filter:blur(8px);
+    border:1px solid var(--border-line); border-radius:12px;
+    padding:14px 16px; font-size:0.82rem; color:var(--text-soft);
+  }
+
+  /* ---------- TICKER ---------- */
+  .ticker-strip{
+    background:var(--navy-mid); border-top:1px solid var(--border-line); border-bottom:1px solid var(--border-line);
+    padding:16px 0; overflow:hidden; white-space:nowrap;
+  }
+  .ticker-track{
+    display:inline-flex; gap:48px; animation:scroll-left 32s linear infinite;
+  }
+  .ticker-strip:hover .ticker-track{animation-play-state:paused;}
+  @keyframes scroll-left{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .ticker-item{font-family:'IBM Plex Mono',monospace; font-size:0.9rem; color:var(--text-soft); display:inline-flex; gap:10px; align-items:center;}
+  .ticker-item .pair{color:var(--white); font-weight:500;}
+  .ticker-item .up{color:#7FD99A;}
+  .ticker-item .down{color:#E08A8A;}
+
+  /* ---------- FEATURES ---------- */
+  .section-pad{padding:110px 0;}
+  .section-head{max-width:600px; margin-bottom:64px;}
+  .section-head .eyebrow{margin-bottom:16px;}
+  .section-head h2{font-size:2.4rem; line-height:1.15; margin-bottom:16px;}
+  .section-head p{color:var(--text-soft); font-size:1.05rem; line-height:1.65;}
+
+  .features-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:2px;
+    background:var(--border-line); border-radius:var(--radius); overflow:hidden;
+  }
+  .feature-card{
+    background:var(--navy-deep); padding:36px 28px;
+    transition:background 0.25s ease;
+  }
+  .feature-card:hover{background:var(--navy-panel);}
+  .feature-icon{
+    width:44px; height:44px; border-radius:10px; background:rgba(198,161,91,0.12);
+    display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+    color:var(--gold-bright);
+  }
+  .feature-card h3{font-size:1.08rem; font-weight:600; margin-bottom:10px; font-family:'Inter',sans-serif;}
+  .feature-card p{font-size:0.92rem; color:var(--text-muted); line-height:1.6;}
+
+  /* ---------- HOW IT WORKS ---------- */
+  .how-wrap{background:var(--navy-mid);}
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:32px;}
+  .step{padding:8px;}
+  .step-num{
+    font-family:'IBM Plex Mono',monospace; font-size:0.85rem; color:var(--gold);
+    border:1px solid var(--gold); width:38px; height:38px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; margin-bottom:22px;
+  }
+  .step h3{font-size:1.2rem; margin-bottom:10px;}
+  .step p{color:var(--text-soft); font-size:0.95rem; line-height:1.6;}
+
+  /* ---------- APP SHOWCASE ---------- */
+  .showcase-grid{
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; margin-top:60px;
+  }
+  .phone-frame{
+    border-radius:20px; overflow:hidden; border:1px solid var(--border-line);
+    background:var(--navy-panel); aspect-ratio:9/18;
+    box-shadow:0 25px 50px -15px rgba(0,0,0,0.45);
+  }
+  .phone-frame img{width:100%; height:100%; object-fit:cover;}
+
+  /* ---------- DOWNLOAD CTA ---------- */
+  .download-section{
+    background:linear-gradient(135deg, var(--navy-panel), var(--navy-deep));
+    border-radius:28px; padding:70px 60px; margin:0 32px;
+    border:1px solid var(--border-line);
+    display:grid; grid-template-columns:1.2fr 0.8fr; gap:48px; align-items:center;
+    max-width:1116px; margin-left:auto; margin-right:auto;
+  }
+  .download-section h2{font-size:2rem; margin-bottom:16px;}
+  .download-section p{color:var(--text-soft); margin-bottom:32px; max-width:440px; line-height:1.65;}
+  .apk-btn{
+    background:var(--gold); color:var(--navy-deep); font-weight:700;
+    padding:18px 32px; border-radius:14px; font-size:1rem;
+    display:inline-flex; align-items:center; gap:14px;
+    transition:background 0.2s ease, transform 0.2s ease;
+  }
+  .apk-btn:hover, .apk-btn:focus-visible{background:var(--gold-bright); transform:translateY(-2px);}
+  .apk-btn .icon-box{
+    width:34px; height:34px; border-radius:8px; background:rgba(10,31,61,0.15);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .apk-meta{font-size:0.8rem; color:var(--text-muted); margin-top:14px;}
+  .qr-box{
+    background:var(--white); border-radius:16px; padding:20px;
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+    justify-self:center;
+  }
+  .qr-box .qr-code{
+    width:140px; height:140px;
+  }
+  .qr-box .qr-code svg{width:100%; height:100%; display:block;}
+  .qr-box span{color:var(--navy-deep); font-size:0.78rem; font-weight:600;}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonial-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  .testimonial-card{
+    background:var(--navy-panel); border:1px solid var(--border-line); border-radius:var(--radius);
+    padding:30px 28px;
+  }
+  .stars{color:var(--gold-bright); font-size:0.95rem; margin-bottom:16px; letter-spacing:2px;}
+  .testimonial-card p.quote{color:var(--text-soft); font-size:0.95rem; line-height:1.65; margin-bottom:22px;}
+  .reviewer{display:flex; align-items:center; gap:12px;}
+  .reviewer-avatar{
+    width:38px; height:38px; border-radius:50%; background:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--navy-deep); font-weight:700; font-size:0.85rem;
+  }
+  .reviewer strong{display:block; font-size:0.9rem;}
+  .reviewer span{font-size:0.78rem; color:var(--text-muted);}
+  .demo-note{
+    text-align:center; font-size:0.78rem; color:var(--text-muted); margin-top:32px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--navy-mid); padding:64px 0 32px; border-top:1px solid var(--border-line);}
+  .footer-grid{
+    display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px;
+  }
+  .footer-brand p{color:var(--text-muted); font-size:0.9rem; margin-top:16px; line-height:1.6; max-width:280px;}
+  .footer-col h4{font-size:0.85rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold); margin-bottom:18px;}
+  .footer-col a{display:block; color:var(--text-soft); font-size:0.92rem; margin-bottom:12px; transition:color 0.2s ease;}
+  .footer-col a:hover, .footer-col a:focus-visible{color:var(--gold-bright);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:28px; border-top:1px solid var(--border-line);
+    font-size:0.82rem; color:var(--text-muted); flex-wrap:wrap; gap:12px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{max-width:420px; margin:0 auto;}
+    .features-grid{grid-template-columns:repeat(2,1fr);}
+    .steps{grid-template-columns:1fr;}
+    .showcase-grid{grid-template-columns:repeat(3,1fr); gap:14px;}
+    .download-section{grid-template-columns:1fr; padding:48px 32px; margin:0 20px;}
+    .qr-box{justify-self:start;}
+    .testimonial-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr; row-gap:32px;}
+  }
+  @media (max-width:640px){
+    .nav-links{
+      position:fixed; top:74px; left:0; right:0; bottom:0;
+      background:var(--navy-deep); flex-direction:column; align-items:flex-start;
+      padding:32px; gap:24px; transform:translateX(100%); transition:transform 0.3s ease;
+    }
+    .nav-links.open{transform:translateX(0);}
+    .nav-toggle{display:block;}
+    .hero{padding:48px 0;}
+    .hero h1{font-size:2.3rem;}
+    .hero-stats{gap:26px; flex-wrap:wrap;}
+    .section-pad{padding:64px 0;}
+    .section-head h2{font-size:1.8rem;}
+    .features-grid{grid-template-columns:1fr;}
+    .showcase-grid{grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#" class="brand">
+      <img src="logo.png" alt="National Exchange logo">
+      <span class="brand-name">National<span>Exchange</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#features" data-en="Features" data-bn="ফিচার">Features</a></li>
+      <li><a href="#how" data-en="How it works" data-bn="কীভাবে কাজ করে">How it works</a></li>
+      <li><a href="#app" data-en="App" data-bn="অ্যাপ">App</a></li>
+      <li><a href="#reviews" data-en="Reviews" data-bn="রিভিউ">Reviews</a></li>
+      <li><a href="#download" class="nav-cta" data-en="Download Now" data-bn="ডাউনলোড করুন">Download Now</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-btn" data-lang-btn="bn">বাং</button>
+        <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow" data-en="Licensed money transfer" data-bn="লাইসেন্সপ্রাপ্ত মানি ট্রান্সফার">Licensed money transfer</div>
+      <h1 data-en="Send money home <em>in minutes</em>,<br>not days." data-bn="দিনের নয়, <em>মিনিটেই</em><br>বাড়িতে টাকা পাঠান।">Send money home <em>in minutes</em>,<br>not days.</h1>
+      <p class="lead" data-en="National Exchange moves your money across borders with bank-grade security, transparent rates, and zero hidden fees — from your phone or your browser." data-bn="ন্যাশনাল এক্সচেঞ্জ আপনার ফোন বা ব্রাউজার থেকেই ব্যাংক-গ্রেড নিরাপত্তা, স্বচ্ছ রেট এবং কোনো লুকানো ফি ছাড়াই সীমান্ত পেরিয়ে আপনার টাকা পাঠায়।">National Exchange moves your money across borders with bank-grade security, transparent rates, and zero hidden fees — from your phone or your browser.</p>
+      <div class="hero-actions">
+        <a href="#download" class="btn-primary" data-en="Download Now" data-bn="ডাউনলোড করুন">
+          Download Now
+        </a>
+        <a href="#how" class="btn-ghost" data-en="See how it works" data-bn="কীভাবে কাজ করে দেখুন">See how it works</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>2.4M+</strong><span data-en="Transfers completed" data-bn="সম্পন্ন ট্রান্সফার">Transfers completed</span></div>
+        <div><strong>35+</strong><span data-en="Countries covered" data-bn="দেশ কভার করা হয়">Countries covered</span></div>
+        <div><strong>0.4%</strong><span data-en="Avg. transfer fee" data-bn="গড় ট্রান্সফার ফি">Avg. transfer fee</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="img1.png" alt="National Exchange app preview">
+      <div class="frame-label" data-en="Real-time transfer tracking, from send to receipt." data-bn="পাঠানো থেকে গ্রহণ পর্যন্ত রিয়েল-টাইম ট্র্যাকিং।">Real-time transfer tracking, from send to receipt.</div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-strip">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="pair">USD → BDT</span> 119.42 <span class="up">▲ 0.12</span></span>
+    <span class="ticker-item"><span class="pair">EUR → BDT</span> 129.85 <span class="down">▼ 0.08</span></span>
+    <span class="ticker-item"><span class="pair">GBP → BDT</span> 151.20 <span class="up">▲ 0.21</span></span>
+    <span class="ticker-item"><span class="pair">AED → BDT</span> 32.55 <span class="up">▲ 0.03</span></span>
+    <span class="ticker-item"><span class="pair">SAR → BDT</span> 31.86 <span class="down">▼ 0.02</span></span>
+    <span class="ticker-item"><span class="pair">CAD → BDT</span> 87.10 <span class="up">▲ 0.15</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item"><span class="pair">USD → BDT</span> 119.42 <span class="up">▲ 0.12</span></span>
+    <span class="ticker-item"><span class="pair">EUR → BDT</span> 129.85 <span class="down">▼ 0.08</span></span>
+    <span class="ticker-item"><span class="pair">GBP → BDT</span> 151.20 <span class="up">▲ 0.21</span></span>
+    <span class="ticker-item"><span class="pair">AED → BDT</span> 32.55 <span class="up">▲ 0.03</span></span>
+    <span class="ticker-item"><span class="pair">SAR → BDT</span> 31.86 <span class="down">▼ 0.02</span></span>
+    <span class="ticker-item"><span class="pair">CAD → BDT</span> 87.10 <span class="up">▲ 0.15</span></span>
+  </div>
+</div>
+
+<section class="section-pad" id="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-en="Why National Exchange" data-bn="কেন ন্যাশনাল এক্সচেঞ্জ">Why National Exchange</div>
+      <h2 data-en="Built for the way money actually moves." data-bn="টাকা যেভাবে সত্যিকার অর্থে চলাচল করে, ঠিক সেভাবেই তৈরি।">Built for the way money actually moves.</h2>
+      <p data-en="Every transfer is tracked, insured, and priced before you confirm — no surprises at the other end." data-bn="প্রতিটি ট্রান্সফার ট্র্যাক করা হয়, ইনস্যুরড থাকে এবং কনফার্ম করার আগেই দাম জানিয়ে দেওয়া হয় — অন্য প্রান্তে কোনো চমক নেই।">Every transfer is tracked, insured, and priced before you confirm — no surprises at the other end.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 data-en="Fast settlement" data-bn="দ্রুত সেটেলমেন্ট">Fast settlement</h3>
+        <p data-en="Most transfers reach the receiving bank or wallet within minutes, not business days." data-bn="বেশিরভাগ ট্রান্সফার কার্যদিবসের বদলে মিনিটের মধ্যেই গ্রহীতার ব্যাংক বা ওয়ালেটে পৌঁছে যায়।">Most transfers reach the receiving bank or wallet within minutes, not business days.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3 data-en="Bank-grade security" data-bn="ব্যাংক-গ্রেড নিরাপত্তা">Bank-grade security</h3>
+        <p data-en="End-to-end encryption and two-factor authentication protect every transaction." data-bn="এন্ড-টু-এন্ড এনক্রিপশন এবং টু-ফ্যাক্টর অথেনটিকেশন প্রতিটি লেনদেনকে সুরক্ষিত রাখে।">End-to-end encryption and two-factor authentication protect every transaction.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💱</div>
+        <h3 data-en="Live, honest rates" data-bn="লাইভ, সঠিক রেট">Live, honest rates</h3>
+        <p data-en="See the exact exchange rate and fee before you send — locked in for 60 seconds." data-bn="পাঠানোর আগেই সঠিক এক্সচেঞ্জ রেট ও ফি দেখুন — ৬০ সেকেন্ডের জন্য লক করা থাকে।">See the exact exchange rate and fee before you send — locked in for 60 seconds.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3 data-en="National reach" data-bn="দেশব্যাপী নেটওয়ার্ক">National reach</h3>
+        <p data-en="Send to bank accounts, mobile wallets, and cash pickup points in 35+ countries." data-bn="৩৫টিরও বেশি দেশে ব্যাংক অ্যাকাউন্ট, মোবাইল ওয়ালেট এবং ক্যাশ পিকআপ পয়েন্টে টাকা পাঠান।">Send to bank accounts, mobile wallets, and cash pickup points in 35+ countries.</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:48px;">
+      <a href="#download" class="btn-primary" data-en="Download Now" data-bn="ডাউনলোড করুন">Download Now</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad how-wrap" id="how">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-en="Process" data-bn="প্রক্রিয়া">Process</div>
+      <h2 data-en="Three steps, start to finish." data-bn="শুরু থেকে শেষ, মাত্র তিনটি ধাপ।">Three steps, start to finish.</h2>
+      <p data-en="No branch visits, no paperwork — set up a transfer from anywhere." data-bn="কোনো শাখায় যেতে হবে না, কোনো কাগজপত্র লাগবে না — যেকোনো জায়গা থেকেই ট্রান্সফার শুরু করুন।">No branch visits, no paperwork — set up a transfer from anywhere.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3 data-en="Create your transfer" data-bn="ট্রান্সফার তৈরি করুন">Create your transfer</h3>
+        <p data-en="Enter the amount and destination — National Exchange shows you the live rate and fee upfront." data-bn="পরিমাণ ও গন্তব্য লিখুন — ন্যাশনাল এক্সচেঞ্জ আগে থেকেই লাইভ রেট ও ফি দেখিয়ে দেয়।">Enter the amount and destination — National Exchange shows you the live rate and fee upfront.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3 data-en="Verify and pay" data-bn="ভেরিফাই করে পেমেন্ট করুন">Verify and pay</h3>
+        <p data-en="Confirm your identity once, then pay by card, bank transfer, or wallet balance." data-bn="একবার আপনার পরিচয় নিশ্চিত করুন, তারপর কার্ড, ব্যাংক ট্রান্সফার বা ওয়ালেট ব্যালেন্স দিয়ে পেমেন্ট করুন।">Confirm your identity once, then pay by card, bank transfer, or wallet balance.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3 data-en="Track delivery" data-bn="ডেলিভারি ট্র্যাক করুন">Track delivery</h3>
+        <p data-en="Follow your transfer in real time until it lands with the recipient." data-bn="গ্রহীতার কাছে না পৌঁছানো পর্যন্ত রিয়েল-টাইমে আপনার ট্রান্সফার অনুসরণ করুন।">Follow your transfer in real time until it lands with the recipient.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="app">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-en="The app" data-bn="অ্যাপ">The app</div>
+      <h2 data-en="Everything above, in your pocket." data-bn="উপরের সবকিছু, এখন আপনার পকেটে।">Everything above, in your pocket.</h2>
+      <p data-en="The National Exchange app mirrors the web experience — same rates, same tracking, made for one-handed use." data-bn="ন্যাশনাল এক্সচেঞ্জ অ্যাপ ওয়েব অভিজ্ঞতারই প্রতিরূপ — একই রেট, একই ট্র্যাকিং, এক হাতে ব্যবহারের উপযোগী করে তৈরি।">The National Exchange app mirrors the web experience — same rates, same tracking, made for one-handed use.</p>
+    </div>
+    <div class="showcase-grid">
+      <div class="phone-frame"><img src="img1.png" alt="App screen — send money"></div>
+      <div class="phone-frame"><img src="img2.png" alt="App screen — transfer tracking"></div>
+      <div class="phone-frame"><img src="img3.png" alt="App screen — account overview"></div>
+    </div>
+    <div style="text-align:center; margin-top:48px;">
+      <a href="#download" class="btn-primary" data-en="Download Now" data-bn="ডাউনলোড করুন">Download Now</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="download">
+  <div class="download-section">
+    <div>
+      <h2 data-en="Download the app, send in under a minute." data-bn="অ্যাপ ডাউনলোড করুন, এক মিনিটেরও কম সময়ে পাঠান।">Download the app, send in under a minute.</h2>
+      <p data-en="Available for Android now. iOS is on the way. Scan the code or download the APK directly." data-bn="এখন অ্যান্ড্রয়েডের জন্য উপলব্ধ। iOS আসছে শীঘ্রই। কোড স্ক্যান করুন অথবা সরাসরি APK ডাউনলোড করুন।">Available for Android now. iOS is on the way. Scan the code or download the APK directly.</p>
+      <a href="app.apk" class="apk-btn" download>
+        <span class="icon-box">⬇</span>
+        <span data-en="Download Now (.apk)" data-bn="ডাউনলোড করুন (.apk)">Download Now (.apk)</span>
+      </a>
+      <div class="apk-meta" data-en="Version 1.0 · 24 MB · Requires Android 8.0+" data-bn="ভার্সন 1.0 · 24 MB · Android 8.0+ প্রয়োজন">Version 1.0 · 24 MB · Requires Android 8.0+</div>
+    </div>
+    <div class="qr-box">
+      <div class="qr-code" role="img" aria-label="QR code linking to app.apk">
+        <svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg"><path d="M2,2H3V3H2zM3,2H4V3H3zM4,2H5V3H4zM5,2H6V3H5zM6,2H7V3H6zM7,2H8V3H7zM8,2H9V3H8zM10,2H11V3H10zM12,2H13V3H12zM16,2H17V3H16zM17,2H18V3H17zM18,2H19V3H18zM19,2H20V3H19zM20,2H21V3H20zM21,2H22V3H21zM22,2H23V3H22zM2,3H3V4H2zM8,3H9V4H8zM12,3H13V4H12zM13,3H14V4H13zM14,3H15V4H14zM16,3H17V4H16zM22,3H23V4H22zM2,4H3V5H2zM4,4H5V5H4zM5,4H6V5H5zM6,4H7V5H6zM8,4H9V5H8zM12,4H13V5H12zM14,4H15V5H14zM16,4H17V5H16zM18,4H19V5H18zM19,4H20V5H19zM20,4H21V5H20zM22,4H23V5H22zM2,5H3V6H2zM4,5H5V6H4zM5,5H6V6H5zM6,5H7V6H6zM8,5H9V6H8zM10,5H11V6H10zM11,5H12V6H11zM12,5H13V6H12zM13,5H14V6H13zM14,5H15V6H14zM16,5H17V6H16zM18,5H19V6H18zM19,5H20V6H19zM20,5H21V6H20zM22,5H23V6H22zM2,6H3V7H2zM4,6H5V7H4zM5,6H6V7H5zM6,6H7V7H6zM8,6H9V7H8zM10,6H11V7H10zM11,6H12V7H11zM14,6H15V7H14zM16,6H17V7H16zM18,6H19V7H18zM19,6H20V7H19zM20,6H21V7H20zM22,6H23V7H22zM2,7H3V8H2zM8,7H9V8H8zM10,7H11V8H10zM13,7H14V8H13zM16,7H17V8H16zM22,7H23V8H22zM2,8H3V9H2zM3,8H4V9H3zM4,8H5V9H4zM5,8H6V9H5zM6,8H7V9H6zM7,8H8V9H7zM8,8H9V9H8zM10,8H11V9H10zM12,8H13V9H12zM14,8H15V9H14zM16,8H17V9H16zM17,8H18V9H17zM18,8H19V9H18zM19,8H20V9H19zM20,8H21V9H20zM21,8H22V9H21zM22,8H23V9H22zM10,9H11V10H10zM12,9H13V10H12zM13,9H14V10H13zM14,9H15V10H14zM2,10H3V11H2zM6,10H7V11H6zM8,10H9V11H8zM9,10H10V11H9zM10,10H11V11H10zM11,10H12V11H11zM13,10H14V11H13zM15,10H16V11H15zM16,10H17V11H16zM17,10H18V11H17zM18,10H19V11H18zM19,10H20V11H19zM22,10H23V11H22zM3,11H4V12H3zM5,11H6V12H5zM6,11H7V12H6zM7,11H8V12H7zM9,11H10V12H9zM11,11H12V12H11zM12,11H13V12H12zM13,11H14V12H13zM14,11H15V12H14zM20,11H21V12H20zM2,12H3V13H2zM4,12H5V13H4zM8,12H9V13H8zM9,12H10V13H9zM10,12H11V13H10zM13,12H14V13H13zM16,12H17V13H16zM17,12H18V13H17zM18,12H19V13H18zM19,12H20V13H19zM21,12H22V13H21zM2,13H3V14H2zM3,13H4V14H3zM6,13H7V14H6zM12,13H13V14H12zM15,13H16V14H15zM16,13H17V14H16zM21,13H22V14H21zM3,14H4V15H3zM4,14H5V15H4zM5,14H6V15H5zM6,14H7V15H6zM8,14H9V15H8zM10,14H11V15H10zM12,14H13V15H12zM14,14H15V15H14zM15,14H16V15H15zM16,14H17V15H16zM18,14H19V15H18zM19,14H20V15H19zM21,14H22V15H21zM22,14H23V15H22zM10,15H11V16H10zM11,15H12V16H11zM14,15H15V16H14zM15,15H16V16H15zM16,15H17V16H16zM18,15H19V16H18zM20,15H21V16H20zM21,15H22V16H21zM2,16H3V17H2zM3,16H4V17H3zM4,16H5V17H4zM5,16H6V17H5zM6,16H7V17H6zM7,16H8V17H7zM8,16H9V17H8zM10,16H11V17H10zM11,16H12V17H11zM12,16H13V17H12zM14,16H15V17H14zM15,16H16V17H15zM18,16H19V17H18zM19,16H20V17H19zM21,16H22V17H21zM2,17H3V18H2zM8,17H9V18H8zM11,17H12V18H11zM12,17H13V18H12zM13,17H14V18H13zM14,17H15V18H14zM17,17H18V18H17zM18,17H19V18H18zM19,17H20V18H19zM21,17H22V18H21zM22,17H23V18H22zM2,18H3V19H2zM4,18H5V19H4zM5,18H6V19H5zM6,18H7V19H6zM8,18H9V19H8zM10,18H11V19H10zM12,18H13V19H12zM13,18H14V19H13zM16,18H17V19H16zM22,18H23V19H22zM2,19H3V20H2zM4,19H5V20H4zM5,19H6V20H5zM6,19H7V20H6zM8,19H9V20H8zM11,19H12V20H11zM12,19H13V20H12zM13,19H14V20H13zM14,19H15V20H14zM17,19H18V20H17zM18,19H19V20H18zM19,19H20V20H19zM21,19H22V20H21zM22,19H23V20H22zM2,20H3V21H2zM4,20H5V21H4zM5,20H6V21H5zM6,20H7V21H6zM8,20H9V21H8zM12,20H13V21H12zM13,20H14V21H13zM16,20H17V21H16zM18,20H19V21H18zM19,20H20V21H19zM20,20H21V21H20zM2,21H3V22H2zM8,21H9V22H8zM12,21H13V22H12zM15,21H16V22H15zM16,21H17V22H16zM18,21H19V22H18zM2,22H3V23H2zM3,22H4V23H3zM4,22H5V23H4zM5,22H6V23H5zM6,22H7V23H6zM7,22H8V23H7zM8,22H9V23H8zM10,22H11V23H10zM14,22H15V23H14zM15,22H16V23H15zM16,22H17V23H16zM22,22H23V23H22z" fill="#0A1F3D"/></svg>
+      </div>
+      <span data-en="Scan to download" data-bn="ডাউনলোড করতে স্ক্যান করুন">Scan to download</span>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="reviews">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" data-en="Customers" data-bn="গ্রাহক">Customers</div>
+      <h2 data-en="Trusted by people sending money that matters." data-bn="যারা গুরুত্বপূর্ণ টাকা পাঠান, তাদের আস্থার প্রতীক।">Trusted by people sending money that matters.</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote" data-en="Rates are clear before I confirm, and my transfer landed in under ten minutes." data-bn="কনফার্ম করার আগেই রেট স্পষ্ট থাকে, আর আমার ট্রান্সফার দশ মিনিটেরও কম সময়ে পৌঁছে গেছে।">Rates are clear before I confirm, and my transfer landed in under ten minutes.</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">R</div>
+          <div><strong>Rahim A.</strong><span data-en="Sample review" data-bn="নমুনা রিভিউ">Sample review</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote" data-en="Switched from my old provider after one comparison — the fee difference was obvious." data-bn="একবার তুলনা করার পরই পুরনো প্রোভাইডার পাল্টে ফেলেছি — ফির পার্থক্যটা স্পষ্ট ছিল।">Switched from my old provider after one comparison — the fee difference was obvious.</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">S</div>
+          <div><strong>Sadia K.</strong><span data-en="Sample review" data-bn="নমুনা রিভিউ">Sample review</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★☆</div>
+        <p class="quote" data-en="Tracking the transfer step by step removed all the usual guesswork." data-bn="ধাপে ধাপে ট্রান্সফার ট্র্যাক করার ফলে অহেতুক অনুমান করার দরকার পড়েনি।">Tracking the transfer step by step removed all the usual guesswork.</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">T</div>
+          <div><strong>Tanvir H.</strong><span data-en="Sample review" data-bn="নমুনা রিভিউ">Sample review</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="demo-note" data-en="These are sample testimonials for demonstration — replace with real customer feedback before publishing." data-bn="এগুলো শুধুমাত্র প্রদর্শনের জন্য নমুনা টেস্টিমোনিয়াল — প্রকাশ করার আগে প্রকৃত গ্রাহকের মতামত দিয়ে প্রতিস্থাপন করুন।">These are sample testimonials for demonstration — replace with real customer feedback before publishing.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="brand">
+          <img src="logo.png" alt="National Exchange logo" style="height:30px;">
+          <span class="brand-name">National<span>Exchange</span></span>
+        </a>
+        <p data-en="Cross-border money transfer, built for speed, clarity, and trust." data-bn="সীমান্ত পারাপার মানি ট্রান্সফার, দ্রুততা, স্বচ্ছতা ও বিশ্বাসের ওপর ভিত্তি করে তৈরি।">Cross-border money transfer, built for speed, clarity, and trust.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Product" data-bn="প্রোডাক্ট">Product</h4>
+        <a href="#features" data-en="Features" data-bn="ফিচার">Features</a>
+        <a href="#how" data-en="How it works" data-bn="কীভাবে কাজ করে">How it works</a>
+        <a href="#download" data-en="Download Now" data-bn="ডাউনলোড করুন">Download Now</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Company" data-bn="কোম্পানি">Company</h4>
+        <a href="#" data-en="About us" data-bn="আমাদের সম্পর্কে">About us</a>
+        <a href="#" data-en="Careers" data-bn="ক্যারিয়ার">Careers</a>
+        <a href="#" data-en="Contact" data-bn="যোগাযোগ">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Legal" data-bn="আইনগত">Legal</h4>
+        <a href="#" data-en="Terms of service" data-bn="সেবার শর্তাবলী">Terms of service</a>
+        <a href="#" data-en="Privacy policy" data-bn="গোপনীয়তা নীতি">Privacy policy</a>
+        <a href="#" data-en="Compliance" data-bn="কমপ্লায়েন্স">Compliance</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-en="© 2026 National Exchange. This is a student practice project — not a real financial service." data-bn="© ২০২৬ ন্যাশনাল এক্সচেঞ্জ। এটি একটি শিক্ষার্থীর অনুশীলন প্রকল্প — প্রকৃত কোনো আর্থিক সেবা নয়।">© 2026 National Exchange. This is a student practice project — not a real financial service.</span>
+      <span data-en="Made for learning purposes" data-bn="শেখার উদ্দেশ্যে তৈরি">Made for learning purposes</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  /* ---------- LANGUAGE TOGGLE (default: Bangla) ---------- */
+  (function(){
+    const translatable = document.querySelectorAll('[data-en]');
+    const langButtons = document.querySelectorAll('.lang-btn');
+    let savedLang = 'bn';
+    try{
+      const stored = localStorage.getItem('site-lang');
+      if(stored === 'en' || stored === 'bn') savedLang = stored;
+    }catch(e){ /* localStorage unavailable, fall back to default */ }
+
+    function applyLang(lang){
+      translatable.forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if(text !== null) el.innerHTML = text;
+      });
+      document.body.setAttribute('data-lang', lang);
+      document.documentElement.setAttribute('lang', lang === 'bn' ? 'bn' : 'en');
+      langButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === lang);
+      });
+      try{ localStorage.setItem('site-lang', lang); }catch(e){ /* ignore */ }
+    }
+
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang-btn')));
+    });
+
+    applyLang(savedLang);
+  })();
+</script>
+
+</body>
+</html>
