@@ -63,9 +63,14 @@
     padding:18px 32px; max-width:1180px; margin:0 auto;
   }
   .brand{display:flex; align-items:center; gap:12px;}
-  .brand img{height:36px; width:auto;}
-  .brand-name{font-family:'Fraunces',serif; font-weight:600; font-size:1.2rem; letter-spacing:-0.01em;}
-  .brand-name span{color:var(--gold);}
+  .brand img{height:36px; width:auto; flex-shrink:0;}
+  .brand-name{
+    display:flex; flex-direction:column; line-height:1.08;
+    font-family:'Fraunces',serif; font-weight:600; font-size:1.2rem; letter-spacing:-0.01em;
+  }
+  .brand-name .brand-bottom{
+    color:var(--gold); align-self:flex-end; font-size:0.86em; margin-top:-1px;
+  }
   .nav-links{display:flex; gap:36px; align-items:center;}
   .nav-links a{
     font-size:0.94rem; color:var(--text-soft); font-weight:500;
@@ -97,6 +102,15 @@
   @media (max-width:640px){
     .lang-switch{padding:3px;}
     .lang-btn{padding:5px 11px; font-size:0.78rem;}
+    nav{padding:14px 18px;}
+    .nav-right{gap:10px;}
+    .brand{gap:8px;}
+    .brand img{height:30px;}
+    .brand-name{font-size:1rem;}
+  }
+  @media (max-width:380px){
+    .brand-name{font-size:0.88rem;}
+    .lang-btn{padding:5px 9px; font-size:0.74rem;}
   }
 
   /* ---------- HERO ---------- */
@@ -326,7 +340,7 @@
   <nav>
     <a href="#" class="brand">
       <img src="logo.png" alt="National Exchange logo">
-      <span class="brand-name">National<span>Exchange</span></span>
+      <span class="brand-name"><span class="brand-top">National</span><span class="brand-bottom">Exchange</span></span>
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#features" data-en="Features" data-bn="ফিচার">Features</a></li>
@@ -373,20 +387,20 @@
 </section>
 
 <div class="ticker-strip">
-  <div class="ticker-track">
-    <span class="ticker-item"><span class="pair">USD → BDT</span> 119.42 <span class="up">▲ 0.12</span></span>
-    <span class="ticker-item"><span class="pair">EUR → BDT</span> 129.85 <span class="down">▼ 0.08</span></span>
-    <span class="ticker-item"><span class="pair">GBP → BDT</span> 151.20 <span class="up">▲ 0.21</span></span>
-    <span class="ticker-item"><span class="pair">AED → BDT</span> 32.55 <span class="up">▲ 0.03</span></span>
-    <span class="ticker-item"><span class="pair">SAR → BDT</span> 31.86 <span class="down">▼ 0.02</span></span>
-    <span class="ticker-item"><span class="pair">CAD → BDT</span> 87.10 <span class="up">▲ 0.15</span></span>
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item"><span class="pair">USD → BDT</span> 143.50 <span class="up">▲ 0.12</span></span>
+    <span class="ticker-item"><span class="pair">EUR → BDT</span> 160.70 <span class="down">▼ 0.08</span></span>
+    <span class="ticker-item"><span class="pair">GBP → BDT</span> 186.00 <span class="up">▲ 0.21</span></span>
+    <span class="ticker-item"><span class="pair">AED → BDT</span> 53.60 <span class="up">▲ 0.03</span></span>
+    <span class="ticker-item"><span class="pair">SAR → BDT</span> 52.50 <span class="down">▼ 0.02</span></span>
+    <span class="ticker-item"><span class="pair">CAD → BDT</span> 107.90 <span class="up">▲ 0.15</span></span>
     <!-- duplicate for seamless loop -->
-    <span class="ticker-item"><span class="pair">USD → BDT</span> 119.42 <span class="up">▲ 0.12</span></span>
-    <span class="ticker-item"><span class="pair">EUR → BDT</span> 129.85 <span class="down">▼ 0.08</span></span>
-    <span class="ticker-item"><span class="pair">GBP → BDT</span> 151.20 <span class="up">▲ 0.21</span></span>
-    <span class="ticker-item"><span class="pair">AED → BDT</span> 32.55 <span class="up">▲ 0.03</span></span>
-    <span class="ticker-item"><span class="pair">SAR → BDT</span> 31.86 <span class="down">▼ 0.02</span></span>
-    <span class="ticker-item"><span class="pair">CAD → BDT</span> 87.10 <span class="up">▲ 0.15</span></span>
+    <span class="ticker-item"><span class="pair">USD → BDT</span> 143.50 <span class="up">▲ 0.12</span></span>
+    <span class="ticker-item"><span class="pair">EUR → BDT</span> 160.70 <span class="down">▼ 0.08</span></span>
+    <span class="ticker-item"><span class="pair">GBP → BDT</span> 186.00 <span class="up">▲ 0.21</span></span>
+    <span class="ticker-item"><span class="pair">AED → BDT</span> 53.60 <span class="up">▲ 0.03</span></span>
+    <span class="ticker-item"><span class="pair">SAR → BDT</span> 52.50 <span class="down">▼ 0.02</span></span>
+    <span class="ticker-item"><span class="pair">CAD → BDT</span> 107.90 <span class="up">▲ 0.15</span></span>
   </div>
 </div>
 
@@ -532,7 +546,7 @@
       <div class="footer-brand">
         <a href="#" class="brand">
           <img src="logo.png" alt="National Exchange logo" style="height:30px;">
-          <span class="brand-name">National<span>Exchange</span></span>
+          <span class="brand-name"><span class="brand-top">National</span><span class="brand-bottom">Exchange</span></span>
         </a>
         <p data-en="Cross-border money transfer, built for speed, clarity, and trust." data-bn="সীমান্ত পারাপার মানি ট্রান্সফার, দ্রুততা, স্বচ্ছতা ও বিশ্বাসের ওপর ভিত্তি করে তৈরি।">Cross-border money transfer, built for speed, clarity, and trust.</p>
       </div>
@@ -600,6 +614,45 @@
     });
 
     applyLang(savedLang);
+  })();
+
+  /* ---------- LIVE EXCHANGE RATE TICKER ---------- */
+  (function(){
+    const API_URL = 'https://clientproject.fun/nationex86/TAkaPay/ExchangeRate/getExchange.php';
+    const track = document.getElementById('tickerTrack');
+    if(!track) return;
+
+    function buildTickerHTML(rates){
+      const items = rates
+        .filter(r => (r.currName || '').trim().toUpperCase() !== 'BDT')
+        .map(r => {
+          const code = (r.currName || '').trim();
+          const rate = parseFloat(r.exRate);
+          const rateText = isNaN(rate) ? r.exRate : rate.toFixed(2);
+          return `<span class="ticker-item"><span class="pair">${code} → BDT</span> ${rateText}</span>`;
+        })
+        .join('');
+      return items;
+    }
+
+    async function loadRates(){
+      try{
+        const res = await fetch(API_URL, { cache: 'no-store' });
+        if(!res.ok) throw new Error('Bad response: ' + res.status);
+        const data = await res.json();
+        if(!Array.isArray(data) || data.length === 0) return;
+        const html = buildTickerHTML(data);
+        if(html){
+          track.innerHTML = html + html; // duplicate for seamless scroll
+        }
+      }catch(err){
+        // Keep whatever is already in the ticker (fallback rates) if the API can't be reached
+        console.warn('Live rate fetch failed, showing fallback rates:', err);
+      }
+    }
+
+    loadRates();
+    setInterval(loadRates, 60000); // refresh every 60 seconds
   })();
 </script>
 
